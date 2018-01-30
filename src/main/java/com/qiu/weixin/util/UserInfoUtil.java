@@ -34,8 +34,15 @@ public class UserInfoUtil {
     }
 
     //获取用户位置信息
-    public static String User_Location = "";
+    public static String User_Location = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi";
+    public static String getJsApi(String access_token) {
+        return String.format(User_Location, access_token);
+    }
 
+    public static String user_location_token="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appId=%s&secret=%s";
+    public static String getLocToken(String appId,String secret) {
+        return String.format(user_location_token, appId,secret);
+    }
 
     public static void main(String[] args) {
         String REDIRECT_URI = "http://wechat.tmqyt.com/url";

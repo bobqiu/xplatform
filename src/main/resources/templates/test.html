@@ -1,0 +1,25 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <title>获取地理位置</title>
+    <!-- 微信 js-sdk -->
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+<br></br>
+<div class="container">
+    <div class="form-group">
+        <label for="item-ifo" class="col-sm-2 control-label">地址：</label>
+        <div class="col-sm-10" id="item-ifo">
+            <input type="text" value="" class="form-control"
+                   name="location.address" id="address" placeholder="cookiew" tabindex="1" autocomplete="off" />
+            <div class="i-name ico" id="i-name">${appid}</div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <Properties>
+        <property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss}\t%p\t%c\t%m%n</property>
+        <property name="basePath">/Users/bobqiu/data</property>
+        <property name="system-msg">${basePath}/system.log</property>
+        <property name="business-a-msg">${basePath}/service_a.log</property>
+        <property name="business-b-msg">${basePath}/service_b.log</property>
+        <property name="rollingfile_system-msg">${basePath}/system%d{yyyy-MM-dd}.log</property>
+        <property name="rollingfile_business-a-msg">${basePath}/service_a%d{yyyy-MM-dd}.log</property>
+        <property name="rollingfile_business-b-msg">${basePath}/service_b%d{yyyy-MM-dd}.log</property>
+    </Properties>
+    <appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="ACCEPT" />
+            <PatternLayout pattern="${log_pattern}" />
+        </Console>
+        <RollingFile name="appender_system-msg" filename="${system-msg}" filePattern="${rollingfile_system-msg}" append="true">
+            <Filters>
+                <ThresholdFilter level="info" onMatch="NEUTRAL" onMismatch="ACCEPT"/>
+            </Filters>
+            <PatternLayout>
+                <!--<Pattern>[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] [%t] [%C %L] %m%n%d{yyyy-MM-dd HH:mm:ss} %-5level %class{36} %L %M - %msg%xEx%n</Pattern>-->
+                <Pattern>${log_pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="appender_business-a-msg" filename="${business-a-msg}" filePattern="${rollingfile_business-a-msg}" append="true">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>${log_pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="appender_business-b-msg" filename="${business-b-msg}" filePattern="${rollingfile_business-b-msg}" append="true">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>${log_pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <AsyncLogger name="appender_system-msg" level="info" additivity="true"  includeLocation="true" >
+            <AppenderRef ref="appender_system-msg" />
+           <!-- <DisruptorBlockingQueue  spinPolicy="SPINNING"/>-->
+        </AsyncLogger>
+        <AsyncLogger name="appender_business-a-msg" level="info" additivity="true"  includeLocation="true">
+            <AppenderRef ref="appender_business-a-msg" />
+        </AsyncLogger>
+        <AsyncLogger name="appender_business-b-msg" level="info" additivity="true"  includeLocation="true">
+            <AppenderRef ref="appender_business-b-msg" />
+        </AsyncLogger>
+        <Root level="info">
+            <AppenderRef ref="console" />
+        </Root>
+    </loggers>
+</configuration>
