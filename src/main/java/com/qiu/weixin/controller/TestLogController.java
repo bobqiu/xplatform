@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -26,12 +27,13 @@ public class TestLogController {
 
 
     @GetMapping("/testlog")
-    public void test() {
+    public String test(HttpServletRequest request) {
+        String log = request.getParameter("i");
         aLogger.info("hits a test log {} {}", "aa", new Date());
         bLogger.info("hits a test log {} {}", "bb", new Date());
 
-        LogUtil.setLogName("hello", "");
+        LogUtil.setLogName("hello1"+log, "");
         dLogger.info("thits a dynamic  log {} {}", "aa", new Date());
-
+        return "test";
     }
 }

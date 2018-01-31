@@ -65,10 +65,12 @@
         <AsyncLogger name="appender_business-b-msg" level="info" additivity="true"  includeLocation="true">
             <AppenderRef ref="appender_business-b-msg" />
         </AsyncLogger>
+        <logger name="dynamic_log">
+            <AppenderRef ref="dynamic_log" />
+        </logger>
         <Root level="info">
             <AppenderRef ref="console" />
             <AppenderRef ref="appender_system-msg"/>
-            <AppenderRef ref="dynamic_log"/>
         </Root>
     </loggers>
 </configuration>
