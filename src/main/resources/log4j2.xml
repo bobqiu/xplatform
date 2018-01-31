@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="OFF">
+<configuration status="OFF" monitorInterval="30">
     <Properties>
         <property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss}\t%p\t%c\t%m%n</property>
         <property name="basePath">/Users/bobqiu/data</property>
@@ -13,9 +13,9 @@
     <appenders>
         <Console name="console" target="SYSTEM_OUT">
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="ACCEPT" />
-            <PatternLayout pattern="${log_pattern}" />
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] [%t] [%C %L] %m%n" />
         </Console>
-        <RollingFile name="appender_system-msg" filename="${system-msg}" filePattern="${rollingfile_system-msg}" append="true">
+        <RollingFile name="appender_system-msg" filename="${system-msg}" filePattern="${rollingfile_system-msg}"  append="true">
             <Filters>
                 <ThresholdFilter level="info" onMatch="NEUTRAL" onMismatch="ACCEPT"/>
             </Filters>
@@ -45,11 +45,19 @@
                 <TimeBasedTriggeringPolicy />
             </Policies>
         </RollingFile>
+        <RollingFile name="dynamic_log" fileName= "${sys:logFileName}"
+                     filePattern="${sys:logFileName}-%i.log">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%-5level][%d{yyyy-MM-dd HH:mm:ss}][%F:%L] - %m%n" />
+
+            <SizeBasedTriggeringPolicy size="100MB" />
+            <!-- DefaultRolloverStrategy 中的参数max，可以限制 SizeBasedTriggeringPolicy中size超出后，只保留max个存档-->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
     </appenders>
     <loggers>
         <AsyncLogger name="appender_system-msg" level="info" additivity="true"  includeLocation="true" >
             <AppenderRef ref="appender_system-msg" />
-           <!-- <DisruptorBlockingQueue  spinPolicy="SPINNING"/>-->
         </AsyncLogger>
         <AsyncLogger name="appender_business-a-msg" level="info" additivity="true"  includeLocation="true">
             <AppenderRef ref="appender_business-a-msg" />
@@ -59,6 +67,8 @@
         </AsyncLogger>
         <Root level="info">
             <AppenderRef ref="console" />
+            <AppenderRef ref="appender_system-msg"/>
+            <AppenderRef ref="dynamic_log"/>
         </Root>
     </loggers>
 </configuration>
