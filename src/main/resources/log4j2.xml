@@ -68,7 +68,7 @@
         <logger name="dynamic_log">
             <AppenderRef ref="dynamic_log" />
         </logger>
-        <Root level="info">
+        <Root level="INFO">
             <AppenderRef ref="console" />
             <AppenderRef ref="appender_system-msg"/>
         </Root>
