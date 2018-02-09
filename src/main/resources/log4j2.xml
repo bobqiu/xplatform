@@ -65,8 +65,26 @@
         <AsyncLogger name="appender_business-b-msg" level="info" additivity="true"  includeLocation="true">
             <AppenderRef ref="appender_business-b-msg" />
         </AsyncLogger>
-        <logger name="dynamic_log">
+        <logger name="dynamic_log" >
             <AppenderRef ref="dynamic_log" />
+        </logger>
+        <logger name="org.springframework" additivity="true">
+            <level value="INFO" />
+        </logger>
+        <logger name="org.apache.shiro">
+            <level value="WARN" />
+        </logger>
+        <logger name="freemarker">
+            <level value="WARN" />
+        </logger>
+        <logger name="org.hibernate">
+            <level value="WARN" />
+        </logger>
+        <logger name="org.hibernate.SQL">
+            <level value="DEBUG" />
+        </logger>
+        <logger name="net.sf" additivity="false">
+            <level value="DEBUG" />
         </logger>
         <Root level="INFO">
             <AppenderRef ref="console" />
